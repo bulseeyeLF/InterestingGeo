@@ -41,6 +41,22 @@ public class QuestionEditPane extends BorderPane {
         setSelectedQuestion(question);
     }
 
+    public void deleteQuestion(Question question) {
+        int index = questions.indexOf(question);
+        Button oldButton = questionButtons.get(index);
+        questionButtons.remove(oldButton);
+        buttonsPane.getChildren().remove(oldButton);
+        if (!questionButtons.isEmpty()) {
+            questionButtons.get(0).requestFocus();
+            setSelectedQuestion(questions.get(0));
+        }
+        questions.remove(question);
+    }
+
+    public Question getSelectedQuestion() {
+        return this.selectedQuestion;
+    }
+
     public void setSelectedQuestion(Question selectedQuestion) {
         this.selectedQuestion = selectedQuestion;
         this.selectedQuestion.setQuestionTextArea(selectedQuestion.getQuestionTextArea());

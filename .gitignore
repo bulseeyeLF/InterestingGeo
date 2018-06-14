@@ -18,6 +18,7 @@
 *.zip
 *.tar.gz
 *.rar
+*.map
 
 # IDEA stuff #
 .idea/

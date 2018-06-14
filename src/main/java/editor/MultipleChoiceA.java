@@ -9,8 +9,10 @@ public class MultipleChoiceA extends Answer {
         button.selectedProperty().addListener((obs, wasPreviouslySelected, isNowSelected) -> {
             if (isNowSelected) {
                 setCorrect(true);
+                answerTextField.setStyle("-fx-text-inner-color: green;");
             } else {
                 setCorrect(false);
+                answerTextField.setStyle("-fx-text-inner-color: red;");
             }
         });
         this.correct = correct;
