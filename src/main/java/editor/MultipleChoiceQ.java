@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MultipleChoiceQ extends Question {
+    public ArrayList<MultipleChoiceA> getAnswers() {
+        return answers;
+    }
+
     private ArrayList<MultipleChoiceA> answers = new ArrayList<>();
 
     public MultipleChoiceQ(JSONObject jsonQuestion) {

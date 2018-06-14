@@ -39,6 +39,8 @@ public class EditorApp extends Application {
     public void addQuestions() {
         addRoot.getChildren().clear();
         addScreen = initAddScreen();
+        //addScreen.setPrefHeight(utils.getScreenHeight());
+        //addScreen.setPrefWidth(utils.getScreenWidth());
         addRoot.getChildren().add(addScreen);
         mainScene.setRoot(addRoot);
         currentMenu = addMenu;
@@ -220,17 +222,6 @@ public class EditorApp extends Application {
 
     private QuestionEditPane initAddScreen() {
         QuestionEditPane addScreen = new QuestionEditPane(editScreen.getQuestions());
-        ArrayList<Question> loadedQuestions = editScreen.getQuestions();
-        if (!loadedQuestions.isEmpty()) {
-            if (loadedQuestions.get(0).getType() == 0) {
-                currentAdapter = UIAdapter.setQuestion(loadedQuestions.get(0));
-            } else {
-                currentAdapter = MCAdapter.setQuestion(loadedQuestions.get(0));
-            }
-            addScreen.setFrame(currentAdapter);
-        }
-        currentAdapter.setPrefHeight(utils.getScreenHeight());
-        currentAdapter.setPrefHeight(utils.getScreenWidth()/1.25);
         addScreen.setRight(this.addMenu);
         this.addMenu.setAlignment(Pos.CENTER);
         return addScreen;
@@ -251,7 +242,6 @@ public class EditorApp extends Application {
         mainScreen.setPrefWidth(editorStage.getWidth());
         currentMenu = mainMenu;
         currentRoot = mainRoot;
-        currentAdapter = UIAdapter;
         editorStage.setScene(mainScene);
     }
 
@@ -361,7 +351,4 @@ public class EditorApp extends Application {
     private QuestionFrame currentAdapter;
     private Image defaultMap = new Image(GameFrame.class.getResourceAsStream("resources/maps/default.png"));
     private FileChooser fileChooser = new FileChooser();
-    private MultipleChoiceQFrame MCAdapter = new MultipleChoiceQFrame();
-    private UserInputQFrame UIAdapter = new UserInputQFrame();
-
 }
