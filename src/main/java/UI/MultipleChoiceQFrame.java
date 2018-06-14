@@ -7,6 +7,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import main.java.editor.MultipleChoiceQ;
+import main.java.editor.Question;
+import org.json.JSONObject;
 
 
 public class MultipleChoiceQFrame extends QuestionFrame {
@@ -18,8 +20,20 @@ public class MultipleChoiceQFrame extends QuestionFrame {
     private RadioButton[] radioButtons;
     private FlowPane validityButtonsPane;
 
-    public MultipleChoiceQFrame(MultipleChoiceQ question) {
-        super(question);
+    @Override
+    public QuestionFrame setQuestion(Question question) {
+        this.question = question;
+        init();
+        return this;
+    }
+
+    public MultipleChoiceQFrame() {
+        super();
+    }
+
+    @Override
+    public void init() {
+        this.inputField.setText(question.getQuestionText());
         answersChooserPane = new BorderPane();
         answerTextFieldsPane = new FlowPane();
         validityButtonsPane = new FlowPane();
@@ -36,17 +50,12 @@ public class MultipleChoiceQFrame extends QuestionFrame {
             answerFields[i] = new TextField();
             answerTextFieldsPane.getChildren().add(answerFields[i]);
         }
-        answerTextFieldsPane.setPrefHeight(400);
-        answerTextFieldsPane.setPrefWidth(400);
+        answerTextFieldsPane.setPrefHeight(300);
+        answerTextFieldsPane.setPrefWidth(50);
         answersChooserPane.setLeft(answerTextFieldsPane);
-        validityButtonsPane.setPrefHeight(400);
-        validityButtonsPane.setPrefWidth(200);
+        validityButtonsPane.setPrefHeight(300);
+        validityButtonsPane.setPrefWidth(50);
         answersChooserPane.setRight(validityButtonsPane);
         this.setBottom(answersChooserPane);
-    }
-
-    @Override
-    public void save() {
-
     }
 }

@@ -9,13 +9,16 @@ public class UserInputQ extends Question {
         super(jsonQuestion);
         correctAnswer = new Answer(questionJson.optString("answerText", "error"));
 
-    };
+    }
+
     @Override
     public boolean checkAnswer(Answer userAnswer) {
         givenAnswer = userAnswer;
         return userAnswer.getText().equals(correctAnswer.getText());
     }
 
-    private Answer givenAnswer;
-    private Answer correctAnswer;
+    @Override
+    public JSONObject save() {
+        return null;
+    }
 }

@@ -183,11 +183,15 @@ public class EditorApp extends Application {
         QuestionEditPane addScreen = new QuestionEditPane(editScreen.getQuestions());
         ArrayList<Question> loadedQuestions = editScreen.getQuestions();
         if (!loadedQuestions.isEmpty()) {
-            questionAdapter = new MultipleChoiceQFrame((MultipleChoiceQ)loadedQuestions.get(0));
+            if (loadedQuestions.get(0).getType() == 0) {
+                currentAdapter = UIAdapter.setQuestion(loadedQuestions.get(0));
+            } else {
+                currentAdapter = MCAdapter.setQuestion(loadedQuestions.get(0));
+            }
+            addScreen.setFrame(currentAdapter);
         }
-        questionAdapter.setPrefHeight(utils.getScreenHeight());
-        questionAdapter.setPrefHeight(utils.getScreenWidth()/1.25);
-        addScreen.setCenter(questionAdapter);
+        currentAdapter.setPrefHeight(utils.getScreenHeight());
+        currentAdapter.setPrefHeight(utils.getScreenWidth()/1.25);
         addScreen.setRight(this.addMenu);
         this.addMenu.setAlignment(Pos.CENTER);
         return addScreen;
@@ -208,6 +212,7 @@ public class EditorApp extends Application {
         mainScreen.setPrefWidth(editorStage.getWidth());
         currentMenu = mainMenu;
         currentRoot = mainRoot;
+        currentAdapter = UIAdapter;
         editorStage.setScene(mainScene);
     }
 
@@ -314,7 +319,10 @@ public class EditorApp extends Application {
     private Group currentRoot;
     private OptionMenu currentMenu;
     private Scene mainScene;
+    private QuestionFrame currentAdapter;
     private Image defaultMap = new Image(GameFrame.class.getResourceAsStream("resources/maps/default.png"));
     private FileChooser fileChooser = new FileChooser();
-    private QuestionFrame questionAdapter;
+    private MultipleChoiceQFrame MCAdapter = new MultipleChoiceQFrame();
+    private UserInputQFrame UIAdapter = new UserInputQFrame();
+
 }

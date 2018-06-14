@@ -25,4 +25,9 @@ public class MultipleChoiceQ extends Question {
     public boolean checkAnswer(Answer userAnswer) {
         return ((MultipleChoiceA)userAnswer).isCorrect();
     }
+
+    @Override
+    public JSONObject save() {
+        return null;
+    }
 }
