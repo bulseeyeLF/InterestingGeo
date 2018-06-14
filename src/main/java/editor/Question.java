@@ -3,6 +3,8 @@ package main.java.editor;
 import com.sun.istack.internal.NotNull;
 import org.json.*;
 
+import java.io.File;
+
 public abstract class Question {
 
     public String getQuestionText() {
@@ -10,6 +12,11 @@ public abstract class Question {
     }
 
     protected String questionText;
+
+    public Long getTimer() {
+        return timer;
+    }
+
     protected Long timer;
     protected JSONObject questionJson;
     protected Answer correctAnswer;

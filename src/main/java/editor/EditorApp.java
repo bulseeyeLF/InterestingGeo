@@ -30,6 +30,8 @@ import java.io.*;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EditorApp extends Application {
@@ -67,9 +69,46 @@ public class EditorApp extends Application {
     public void deleteQuestion() {
 
     }
-    public void saveAndBack() {
-        close();
+    private void SaveFile(String content, File file){
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.flush();
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void saveAndBack() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save at :");
+        File file =fileChooser.showSaveDialog(new Stage());
+        JSONObject jsonObject = new JSONObject();
+
+        if (file!=null){
+            file.setWritable(true);
+            ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
+            JSONArray jsonArray = new JSONArray();
+            addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
+            jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
+            try {
+                jsonObject.put("backgroundSource", file.getPath())
+                        .put("globalTimer", editScreen.getTimer())
+                        .put("questions", jsonObjectArrayListOfQuestions)
+                        .put("shapes","");
+
+                SaveFile(jsonObject.toString(),file);
+
+            }  catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        backToMain();
+    }
+
+
     public void backToMain() {
         mainScene.setRoot(mainRoot);
         currentMenu = mainMenu;

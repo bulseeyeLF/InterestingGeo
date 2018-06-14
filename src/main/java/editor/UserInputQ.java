@@ -2,12 +2,13 @@ package main.java.editor;
 
 import main.java.editor.Answer;
 import main.java.editor.Question;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserInputQ extends Question {
     public UserInputQ(JSONObject jsonQuestion) {
         super(jsonQuestion);
-        correctAnswer = new Answer(questionJson.optString("answerText", "error"));
+        correctAnswer = new Answer(questionJson.optString("text", "error"));
 
     }
 
@@ -19,6 +20,14 @@ public class UserInputQ extends Question {
 
     @Override
     public JSONObject save() {
-        return null;
+        try {
+            return new JSONObject().put("questionText", getQuestionText())
+                    .put("timer", getTimer())
+                    .put("text", getCorrectAnswer().getText())
+                    .put("type", getType());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
