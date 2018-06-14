@@ -2,12 +2,12 @@
     "backgroundSource":"notdefault.png",
     "globalTimer":130000,
     "questions" : [
-        { "questionText":"Koji je glavni grad Srbije?", "timer":10000, "answerText":"Pancevo", "type":0 },
+        { "questionText":"Koji je glavni grad Srbije?", "timer":10000, "text":"Pancevo", "type":0 },
         { "questionText":"Koja je najduza rijeka u Srbiji?", "timer":0, "type":1, "answers":[
-            { "answerText":"Dunav", correct:true },
-            { "answerText":"Sava", correct:false },
-            { "answerText":"Drina", correct:false },
-            { "answerText":"Tara", correct:false }
+            { "text":"Dunav", correct:true },
+            { "texy":"Sava", correct:false },
+            { "text":"Drina", correct:false },
+            { "text":"Tara", correct:false }
         ]}
     ],
     "shapes" : [
