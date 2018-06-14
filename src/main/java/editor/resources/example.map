@@ -1,5 +1,5 @@
 {
-    "backgroundSource":"relative/path",
+    "backgroundSource":"resources/maps/default.png",
     "globalTimer":130000,
     "questions" : [
         { "questionText":"Koji je glavni grad Srbije?", "timer":10000, "answer":"Pancevo" },
