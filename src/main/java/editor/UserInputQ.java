@@ -14,7 +14,7 @@ public class UserInputQ extends Question {
 
     public UserInputQ(JSONObject jsonQuestion) {
         super(jsonQuestion);
-        answer = new Answer(jsonQuestion.optString("text", "error"));
+        answer = new Answer(jsonQuestion.optString("text", ""));
     }
 
     @Override

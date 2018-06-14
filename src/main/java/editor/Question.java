@@ -25,7 +25,7 @@ public abstract class Question {
 
     public Question(JSONObject jsonQuestion) {
         questionTextArea = new TextArea(
-            jsonQuestion.optString("questionText", "Error Loading the Question")
+            jsonQuestion.optString("questionText", "")
         );
         timer = jsonQuestion.optLong("timer", 0);
         type = jsonQuestion.optInt("type", 0);

@@ -61,8 +61,23 @@ public class EditorApp extends Application {
     public void importBackground() {
 
     }
-    public void addQuestion() {
-
+    public void addUserInputQuestion() {
+        UserInputQ newQuestion = null;
+        try {
+            newQuestion = new UserInputQ(new JSONObject("{\"type\":0}"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        addScreen.addQuestion(newQuestion);
+    }
+    public void addMultipleChoiceQuestion() {
+        MultipleChoiceQ newQuestion = null;
+        try {
+            newQuestion = new MultipleChoiceQ(new JSONObject("{\"type\":1}"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        addScreen.getQuestions().add(newQuestion);
     }
     public void deleteQuestion() {
 
@@ -163,21 +178,16 @@ public class EditorApp extends Application {
 
     private void mapLoader(String input, GameFrame editScreen) throws IOException{
         try {
-            System.out.println("in map loader");
-            String myJsonFile;
             BufferedReader br = new BufferedReader(new FileReader(input));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
-            System.out.println(line);
             while (line != null) {
                 sb.append(line);
                 line = br.readLine();
             }
-            myJsonFile = sb.toString();
-
+            String myJsonFile = sb.toString();
             JSONObject jsonObjectMap = new JSONObject(myJsonFile);
-
-            String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
+            String backgroundPath = jsonObjectMap.optString("backgroundSource", "default.png");
             InputStream fileInputStream;
             if (!backgroundPath.contains("/")) {
                 backgroundPath = "resources/maps/" + backgroundPath;
@@ -190,7 +200,7 @@ public class EditorApp extends Application {
             JSONArray jsonArray = jsonObjectMap.getJSONArray("questions");
             ArrayList<Question> arrayListQuestion = new ArrayList<>();
 
-            for (int i =0 ; i < jsonArray.length(); i++){
+            for (int i = 0 ; i < jsonArray.length(); i++){
                 int typeInt = jsonArray.optJSONObject(i).optInt("type");
                 if (typeInt == 0){
                     arrayListQuestion.add(new UserInputQ(jsonArray.getJSONObject(i)));
@@ -200,7 +210,7 @@ public class EditorApp extends Application {
             }
             editScreen.setQuestions(arrayListQuestion);
 
-        } catch (FileNotFoundException | JSONException e) {
+        } catch (JSONException e) {
             editScreen.setBackground(defaultMap);
             e.printStackTrace();
         }
@@ -288,22 +298,26 @@ public class EditorApp extends Application {
         this::backToMain
     };
     private String[] ADD_MENU_TEXT = {
-        "Add",
+        "Add basic",
+        "Add next-lvl",
         "Delete",
         "Save"
     };
     private String[] ADD_MENU_HINT_TEXT = {
         "(A)dd another question",
+        "Add another (M)ulti-choice question",
         "(D)elete current question",
         "(S)ave and back"
     };
     private Selection[] ADD_MENU_ACTIONS = {
-        this::addQuestion,
+        this::addUserInputQuestion,
+        this::addMultipleChoiceQuestion,
         this::deleteQuestion,
         this::saveAndBack
     };
     private KeyCode[] ADD_MENU_TRIGGERS = {
         KeyCode.A,
+        KeyCode.M,
         KeyCode.D,
         KeyCode.S
     };

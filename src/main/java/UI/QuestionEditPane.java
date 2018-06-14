@@ -5,7 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import main.java.editor.MultipleChoiceQ;
 import main.java.editor.Question;
+import main.java.editor.UserInputQ;
 import main.java.utils.UtilsCommon;
 
 import java.util.ArrayList;
@@ -20,13 +22,25 @@ public class QuestionEditPane extends BorderPane {
     private Question selectedQuestion;
     private MultipleChoiceQFrame multipleChoiceAdapter;
     private UserInputQFrame userInputAdapter;
-
+    private FlowPane buttonsPane;
     public QuestionFrame getAdapter() {
         return frame;
     }
 
     private QuestionFrame frame;
-    
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+        Button newButton = new Button(Integer.toString(questionButtons.size()));
+        newButton.requestFocus();
+        newButton.setPrefHeight(50);
+        newButton.setPrefWidth(50);
+        newButton.setOnMouseClicked(event -> setSelectedQuestion(questions.get(questionButtons.indexOf(event.getSource()))));
+        questionButtons.add(newButton);
+        buttonsPane.getChildren().add(newButton);
+        setSelectedQuestion(question);
+    }
+
     public void setSelectedQuestion(Question selectedQuestion) {
         this.selectedQuestion = selectedQuestion;
         this.selectedQuestion.setQuestionTextArea(selectedQuestion.getQuestionTextArea());
@@ -40,7 +54,7 @@ public class QuestionEditPane extends BorderPane {
         super();
         userInputAdapter = new UserInputQFrame();
         multipleChoiceAdapter = new MultipleChoiceQFrame();
-        FlowPane buttonsPane = new FlowPane();
+        buttonsPane = new FlowPane();
         this.questions = questions;
         questionButtons = new ArrayList<>();
         for (int i = 0; i < questions.size(); i ++) {

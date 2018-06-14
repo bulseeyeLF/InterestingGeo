@@ -1,12 +1,12 @@
 {
-    "backgroundSource": "resources/maps/notdefault.png",
+    "backgroundSource": "notdefault.png",
     "shapes": [],
     "questions": [
         {
             "timer": 10000,
-            "text": "Pancevo???>>>>",
+            "text": "Pancevo",
             "type": 0,
-            "questionText": "Koji je glavni grad Srbije??????????"
+            "questionText": "Koji je glavni grad Srbije?"
         },
         {
             "timer": 0,
@@ -16,11 +16,11 @@
                     "text": "Dunav"
                 },
                 {
-                    "correct": true,
-                    "text": "error"
+                    "correct": false,
+                    "text": "NestoDrugo"
                 },
                 {
-                    "correct": false,
+                    "correct": true,
                     "text": "Drina"
                 },
                 {
@@ -32,4 +32,4 @@
             "questionText": "Koja je najduza rijeka u Srbiji?"
         }
     ]
-}
+} 

@@ -22,13 +22,25 @@ public class MultipleChoiceQ extends Question {
     public MultipleChoiceQ(JSONObject jsonQuestion) {
         super(jsonQuestion);
         JSONArray answersJson = jsonQuestion.optJSONArray("answers");
-        for (int i = 0; i < answersJson.length(); i++) {
-            JSONObject oneAnswer = answersJson.optJSONObject(i);
-            answers.add(new MultipleChoiceA(
-                oneAnswer.optString("text", "error"),
-                oneAnswer.optBoolean("correct", false)
-            ));
+        if (answersJson != null) {
+            for (int i = 0; i < answersJson.length(); i++) {
+                JSONObject oneAnswer = answersJson.optJSONObject(i);
+                if (oneAnswer != null) {
+                    answers.add(new MultipleChoiceA(
+                        oneAnswer.optString("text", ""),
+                        oneAnswer.optBoolean("correct", false)
+                    ));
+                } else {
+                    answers.add(new MultipleChoiceA(
+                        "",
+                        false
+                    ));
+                }
+            }
+        } else {
+            answers.add(new MultipleChoiceA("", false));
         }
+
     }
 
     @Override
