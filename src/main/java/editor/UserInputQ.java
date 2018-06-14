@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class UserInputQ extends Question {
     public UserInputQ(JSONObject jsonQuestion) {
         super(jsonQuestion);
-        correctAnswer = new Answer(questionJson.optString("answer", "error"));
+        correctAnswer = new Answer(questionJson.optString("answerText", "error"));
 
     };
     @Override

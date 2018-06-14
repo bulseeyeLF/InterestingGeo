@@ -22,7 +22,6 @@ public class MultipleChoiceA extends Answer {
         this.correct = correct;
     }
 
-    private String text;
     private boolean correct;
 
 }

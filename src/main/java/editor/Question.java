@@ -12,7 +12,6 @@ public abstract class Question {
             questionJson = jsonQuestion;
             questionText = questionJson.optString("questionText", "Error Loading the Question");
             timer = questionJson.optLong("timer", 0);
-
     }
 
     public abstract boolean checkAnswer(Answer userAnswer);

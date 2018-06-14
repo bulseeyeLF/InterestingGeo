@@ -16,7 +16,7 @@ public class MultipleChoiceQ extends Question {
         for (int i = 0; i < answersJson.length(); i++) {
             JSONObject oneAnswer = answersJson.optJSONObject(i);
             answers.add(new MultipleChoiceA(
-                oneAnswer.optString("text", "error"),
+                oneAnswer.optString("answerText", "error"),
                 oneAnswer.optBoolean("correct", false)
             ));
         }

@@ -181,6 +181,13 @@ public class EditorApp extends Application {
 
     private BorderPane initAddScreen() {
         QuestionEditPane addScreen = new QuestionEditPane(editScreen.getQuestions());
+        ArrayList<Question> loadedQuestions = editScreen.getQuestions();
+        if (!loadedQuestions.isEmpty()) {
+            questionAdapter = new MultipleChoiceQFrame((MultipleChoiceQ)loadedQuestions.get(0));
+        }
+        questionAdapter.setPrefHeight(utils.getScreenHeight());
+        questionAdapter.setPrefHeight(utils.getScreenWidth()/1.25);
+        addScreen.setCenter(questionAdapter);
         addScreen.setRight(this.addMenu);
         this.addMenu.setAlignment(Pos.CENTER);
         return addScreen;
