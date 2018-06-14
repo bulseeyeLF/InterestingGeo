@@ -27,7 +27,9 @@ import org.json.JSONObject;
 
 import javax.swing.text.html.HTMLDocument;
 import java.io.*;
+import java.nio.Buffer;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 public class EditorApp extends Application {
 
@@ -111,10 +113,18 @@ public class EditorApp extends Application {
                 JSONObject jsonObjectMap = new JSONObject(myJsonFile);
 
                 String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
-                FileInputStream fileInputStream = new FileInputStream(backgroundPath);
+                InputStream fileInputStream;
+                if (backgroundPath.contains("/")) {
+                     fileInputStream= new FileInputStream(backgroundPath);
+                }
+                else {
+                    fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
+                }
                 editScreen.setBackground(new Image(fileInputStream));
+
             } catch (FileNotFoundException | JSONException e) {
                 editScreen.setBackground(defaultMap);
+                e.printStackTrace();
             }
         } else {
             editScreen.setBackground(defaultMap);
