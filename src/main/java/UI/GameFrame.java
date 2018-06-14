@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class GameFrame extends BorderPane {
-    public ArrayList<Question> questions;
+
     public void setBackground(Image background) {
         this.background = background;
         ImageView map = new ImageView(this.background);
@@ -38,4 +38,5 @@ public class GameFrame extends BorderPane {
     private UtilsCommon utils = new UtilsCommon();
     private double WIDTH = utils.getScreenWidth() - utils.getScreenWidth()/5;
     private double HEIGHT = utils.getScreenHeight();
+    public ArrayList<Question> questions;
 }
