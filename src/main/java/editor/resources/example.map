@@ -9,6 +9,7 @@
             { "answerText":"Drina", correct:false },
             { "answerText":"Tara", correct:false }
         ]}
+    ],
     "shapes" : [
         { "type":"polygon", "data":data },
         { "type":"circle", "data":data }
