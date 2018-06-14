@@ -8,7 +8,7 @@
             { "answerText":"Sava", correct:false },
             { "answerText":"Drina", correct:false },
             { "answerText":"Tara", correct:false }
-        ], "timer":0 }
+        ]}
     "shapes" : [
         { "type":"polygon", "data":data },
         { "type":"circle", "data":data }
