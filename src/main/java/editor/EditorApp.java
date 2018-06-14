@@ -44,7 +44,6 @@ public class EditorApp extends Application {
         addRoot.getChildren().add(addScreen);
         mainScene.setRoot(addRoot);
         currentMenu = addMenu;
-        currentRoot = addRoot;
     }
 
     public void newMap() {
@@ -57,7 +56,6 @@ public class EditorApp extends Application {
         }
         mainScene.setRoot(editRoot);
         currentMenu = editMenu;
-        currentRoot = editRoot;
     }
 
     public void importBackground() {
@@ -101,7 +99,6 @@ public class EditorApp extends Application {
     public void backToMain() {
         mainScene.setRoot(mainRoot);
         currentMenu = mainMenu;
-        currentRoot = mainRoot;
     }
 
     public void close() {
@@ -232,7 +229,6 @@ public class EditorApp extends Application {
         mainScreen.setPrefHeight(editorStage.getHeight());
         mainScreen.setPrefWidth(editorStage.getWidth());
         currentMenu = mainMenu;
-        currentRoot = mainRoot;
         editorStage.setScene(mainScene);
     }
 
@@ -336,7 +332,6 @@ public class EditorApp extends Application {
         ADD_MENU_TRIGGERS
     );
     private UtilsCommon utils = new UtilsCommon();
-    private Group currentRoot;
     private OptionMenu currentMenu;
     private Scene mainScene;
     private QuestionFrame currentAdapter;
