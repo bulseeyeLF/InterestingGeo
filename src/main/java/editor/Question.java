@@ -8,14 +8,11 @@ public abstract class Question {
     protected Long timer;
     protected JSONObject questionJson;
 
-    public Question(String unparsedQuestion) {
-        try {
-            questionJson = new JSONObject(unparsedQuestion);
+    public Question(JSONObject jsonQuestion) {
+            questionJson = jsonQuestion;
             questionText = questionJson.optString("questionText", "Error Loading the Question");
             timer = questionJson.optLong("timer", 0);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public abstract boolean checkAnswer(Answer userAnswer);

@@ -2,10 +2,11 @@ package main.java.editor;
 
 import main.java.editor.Answer;
 import main.java.editor.Question;
+import org.json.JSONObject;
 
 public class UserInputQ extends Question {
-    public UserInputQ(String unparsedQuestion) {
-        super(unparsedQuestion);
+    public UserInputQ(JSONObject jsonQuestion) {
+        super(jsonQuestion);
         correctAnswer = new Answer(questionJson.optString("answer", "error"));
 
     };

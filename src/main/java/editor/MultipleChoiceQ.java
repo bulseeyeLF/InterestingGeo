@@ -8,10 +8,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class MultipleChoiceQ extends Question {
-    private ArrayList<MultipleChoiceA> answers;
+    private ArrayList<MultipleChoiceA> answers = new ArrayList<>();
 
-    public MultipleChoiceQ(String unparsedQuestion) {
-        super(unparsedQuestion);
+    public MultipleChoiceQ(JSONObject jsonQuestion) {
+        super(jsonQuestion);
         JSONArray answersJson = questionJson.optJSONArray("answers");
         for (int i = 0; i < answersJson.length(); i++) {
             JSONObject oneAnswer = answersJson.optJSONObject(i);
