@@ -6,24 +6,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserInputQ extends Question {
-    public UserInputQ(JSONObject jsonQuestion) {
-        super(jsonQuestion);
-        correctAnswer = new Answer(questionJson.optString("text", "error"));
-
+    public Answer getAnswer() {
+        return answer;
     }
 
-    @Override
-    public boolean checkAnswer(Answer userAnswer) {
-        givenAnswer = userAnswer;
-        return userAnswer.getText().equals(correctAnswer.getText());
+    private Answer answer;
+
+    public UserInputQ(JSONObject jsonQuestion) {
+        super(jsonQuestion);
+        answer = new Answer(jsonQuestion.optString("text", "error"));
     }
 
     @Override
     public JSONObject save() {
         try {
-            return new JSONObject().put("questionText", getQuestionText())
+            return new JSONObject().put("questionText", this.getQuestionTextArea().getText())
                     .put("timer", getTimer())
-                    .put("text", getCorrectAnswer().getText())
+                    .put("text", answer.getAnswerTextField().getText())
                     .put("type", getType());
         } catch (JSONException e) {
             e.printStackTrace();

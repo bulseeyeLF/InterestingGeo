@@ -17,34 +17,30 @@ public class QuestionEditPane extends BorderPane {
 
     private ArrayList<Question> questions;
     private ArrayList<Button> questionButtons;
-    private FlowPane buttonsPane;
-    private TextArea questionArea;
     private Question selectedQuestion;
-    private MultipleChoiceQFrame MultipleChoiceAdapter;
-    private UserInputQFrame UserInputAdapter;
+    private MultipleChoiceQFrame multipleChoiceAdapter;
+    private UserInputQFrame userInputAdapter;
 
-    public void setSelectedQuestion(Question question) {
-        this.selectedQuestion = question;
-        this.questionArea.setText(question.getQuestionText());
-        this.frame = (question.getType() == 0) ? UserInputAdapter : MultipleChoiceAdapter;
-        this.setBottom(this.frame.setQuestion(question));
-    }
     public QuestionFrame getAdapter() {
         return frame;
     }
 
     private QuestionFrame frame;
-
-    public void setFrame(QuestionFrame frame) {
-        this.frame = frame;
+    
+    public void setSelectedQuestion(Question selectedQuestion) {
+        this.selectedQuestion = selectedQuestion;
+        this.selectedQuestion.setQuestionTextArea(selectedQuestion.getQuestionTextArea());
+        this.setCenter(this.selectedQuestion.getQuestionTextArea());
+        frame = (selectedQuestion.getType() == 0) ? userInputAdapter : multipleChoiceAdapter;
+        frame.setQuestion(selectedQuestion);
+        this.setBottom(frame);
     }
 
     public QuestionEditPane(ArrayList<Question> questions) {
         super();
-        UserInputAdapter = new UserInputQFrame();
-        MultipleChoiceAdapter = new MultipleChoiceQFrame();
-        questionArea = new TextArea("");
-        buttonsPane = new FlowPane();
+        userInputAdapter = new UserInputQFrame();
+        multipleChoiceAdapter = new MultipleChoiceQFrame();
+        FlowPane buttonsPane = new FlowPane();
         this.questions = questions;
         questionButtons = new ArrayList<>();
         for (int i = 0; i < questions.size(); i ++) {
@@ -59,10 +55,10 @@ public class QuestionEditPane extends BorderPane {
         }
         this.setTop(buttonsPane);
         UtilsCommon utils = new UtilsCommon();
-        questionArea.setPrefHeight(utils.getScreenHeight()/3);
+        selectedQuestion.getQuestionTextArea().setPrefHeight(utils.getScreenHeight()/3);
         buttonsPane.setPrefHeight(utils.getScreenHeight()/3);
-        this.setCenter(questionArea);
-        this.buttonsPane.setAlignment(Pos.CENTER);
+        this.setCenter(selectedQuestion.getQuestionTextArea());
+        buttonsPane.setAlignment(Pos.CENTER);
         setBottom(frame);
     }
 

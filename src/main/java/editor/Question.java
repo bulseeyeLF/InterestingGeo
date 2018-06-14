@@ -1,25 +1,19 @@
 package main.java.editor;
 
 import com.sun.istack.internal.NotNull;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import org.json.*;
 
 import java.io.File;
 
 public abstract class Question {
 
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    protected String questionText;
-
     public Long getTimer() {
         return timer;
     }
-
-    protected Long timer;
-    protected JSONObject questionJson;
-    protected Answer correctAnswer;
 
     public int getType() {
         return type;
@@ -29,34 +23,25 @@ public abstract class Question {
         this.type = type;
     }
 
-    protected int type;
-
-    public Answer getCorrectAnswer() {
-        return correctAnswer;
-    }
-
-    public void setCorrectAnswer(Answer correctAnswer) {
-        this.correctAnswer = correctAnswer;
-    }
-
-    protected Answer givenAnswer;
-
-
-    public Answer getGivenAnswer() {
-        return givenAnswer;
-    }
-
-    public void setGivenAnswer(Answer givenAnswer) {
-        this.givenAnswer = givenAnswer;
-    }
-
     public Question(JSONObject jsonQuestion) {
-            questionJson = jsonQuestion;
-            questionText = questionJson.optString("questionText", "Error Loading the Question");
-            timer = questionJson.optLong("timer", 0);
-            type = questionJson.optInt("type", 0);
+        questionTextArea = new TextArea(
+            jsonQuestion.optString("questionText", "Error Loading the Question")
+        );
+        timer = jsonQuestion.optLong("timer", 0);
+        type = jsonQuestion.optInt("type", 0);
     }
 
-    public abstract boolean checkAnswer(Answer userAnswer);
+    public TextArea getQuestionTextArea() {
+        return questionTextArea;
+    }
+
+    public void setQuestionTextArea(TextArea questionTextArea) {
+        this.questionTextArea = questionTextArea;
+    }
+
+    protected Long timer;
+    protected int type;
+    protected TextArea questionTextArea;
+
     public abstract JSONObject save();
 }

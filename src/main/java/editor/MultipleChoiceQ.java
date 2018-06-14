@@ -21,7 +21,7 @@ public class MultipleChoiceQ extends Question {
 
     public MultipleChoiceQ(JSONObject jsonQuestion) {
         super(jsonQuestion);
-        JSONArray answersJson = questionJson.optJSONArray("answers");
+        JSONArray answersJson = jsonQuestion.optJSONArray("answers");
         for (int i = 0; i < answersJson.length(); i++) {
             JSONObject oneAnswer = answersJson.optJSONObject(i);
             answers.add(new MultipleChoiceA(
@@ -29,10 +29,6 @@ public class MultipleChoiceQ extends Question {
                 oneAnswer.optBoolean("correct", false)
             ));
         }
-    }
-    @Override
-    public boolean checkAnswer(Answer userAnswer) {
-        return ((MultipleChoiceA)userAnswer).isCorrect();
     }
 
     @Override
@@ -42,12 +38,12 @@ public class MultipleChoiceQ extends Question {
             JSONArray jsonArray = new JSONArray();
             answers.forEach(a->{
                 try {
-                    jsonArray.put(new JSONObject().put("text", a.getText()).put("correct", a.isCorrect()));
+                    jsonArray.put(new JSONObject().put("text", a.getAnswerTextField().getText()).put("correct", a.isCorrect()));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             });
-            jsonObject.put("questionText", getQuestionText())
+            jsonObject.put("questionText", getQuestionTextArea().getText())
                     .put("timer", getTimer())
                     .put("type", getType());
             jsonObject.put("answers",jsonArray);

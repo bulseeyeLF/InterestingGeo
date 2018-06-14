@@ -1,16 +1,15 @@
 package main.java.editor;
 
+import javafx.scene.control.TextField;
+
 public class Answer {
-    public String getText() {
-        return text;
+
+    public TextField getAnswerTextField() {
+        return answerTextField;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    protected String text;
+    protected TextField answerTextField;
     public Answer(String text) {
-        this.text = text;
+        this.answerTextField = new TextField(text);
     }
 }
