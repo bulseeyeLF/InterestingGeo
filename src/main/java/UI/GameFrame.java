@@ -46,4 +46,13 @@ public class GameFrame extends BorderPane {
     private double WIDTH = utils.getScreenWidth() - utils.getScreenWidth()/5;
     private double HEIGHT = utils.getScreenHeight();
     public ArrayList<Question> questions;
+    public Long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Long timer) {
+        this.timer = timer;
+    }
+
+    private Long timer;
 }

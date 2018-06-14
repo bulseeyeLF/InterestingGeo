@@ -8,6 +8,10 @@ import main.java.editor.Question;
 import java.util.ArrayList;
 
 public class QuestionEditPane extends BorderPane {
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
     private ArrayList<Question> questions;
     private Button[] questionButtons;
     private FlowPane buttonsPane;
