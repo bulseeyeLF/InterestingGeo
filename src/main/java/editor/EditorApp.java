@@ -92,11 +92,10 @@ public class EditorApp extends Application {
                         .put("globalTimer", editScreen.getTimer())
                         .put("questions", jsonObjectArrayListOfQuestions)
                         .put("shapes",new JSONArray());
-            SaveFile(jsonObject.toString(),currentlyOpenFile);
-
-            }  catch (JSONException e) {
-                e.printStackTrace();
-            }
+            SaveFile(jsonObject.toString(4),currentlyOpenFile);
+         }catch (JSONException e) {
+            e.printStackTrace();
+        }
         backToMain();
     }
 
@@ -174,11 +173,13 @@ public class EditorApp extends Application {
             BufferedReader br = new BufferedReader(new FileReader(input));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
+            System.out.println(line);
             while (line != null) {
                 sb.append(line);
                 line = br.readLine();
             }
             myJsonFile = sb.toString();
+
             JSONObject jsonObjectMap = new JSONObject(myJsonFile);
 
             String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
@@ -186,6 +187,7 @@ public class EditorApp extends Application {
             if (!backgroundPath.contains("/")) {
                 backgroundPath = "resources/maps/" + backgroundPath;
             }
+
             fileInputStream = GameFrame.class.getResourceAsStream(backgroundPath);
             editScreen.setBackgroundPath(backgroundPath);
             editScreen.setBackground(new Image(fileInputStream));
