@@ -81,32 +81,22 @@ public class EditorApp extends Application {
     }
 
     public void saveAndBack() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save at :");
-        File file =fileChooser.showSaveDialog(new Stage());
         JSONObject jsonObject = new JSONObject();
-
-        if (file!=null){
-            file.setWritable(true);
-            ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
-            JSONArray jsonArray = new JSONArray();
+        ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
 
 
-            addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
-            jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
-            try {
-                jsonObject.put("backgroundSource", editScreen.getBackgroundPath())
+        addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
+        jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
+        try { jsonObject.put("backgroundSource", editScreen.getBackgroundPath())
                         .put("globalTimer", editScreen.getTimer())
                         .put("questions", jsonObjectArrayListOfQuestions)
                         .put("shapes",new JSONArray());
-
-                SaveFile(jsonObject.toString(),file);
+            SaveFile(jsonObject.toString(),currentlyOpenFile);
 
             }  catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
-
         backToMain();
     }
 
@@ -128,10 +118,10 @@ public class EditorApp extends Application {
                 new FileChooser.ExtensionFilter("All Files", "*.map")
         );
         Stage currentStage = new Stage();
-        File selectedFile = fileChooser.showOpenDialog(currentStage);
+        currentlyOpenFile = fileChooser.showOpenDialog(currentStage);
             editRoot.getChildren().clear();
         try {
-            editScreen = initEditScreen(selectedFile.getCanonicalPath());
+            editScreen = initEditScreen(currentlyOpenFile.getCanonicalPath());
             editRoot.getChildren().add(editScreen);
         } catch (IOException e) {
             e.printStackTrace();
@@ -352,4 +342,5 @@ public class EditorApp extends Application {
     private QuestionFrame currentAdapter;
     private Image defaultMap = new Image(GameFrame.class.getResourceAsStream("resources/maps/default.png"));
     private FileChooser fileChooser = new FileChooser();
+    private File currentlyOpenFile=null;
 }

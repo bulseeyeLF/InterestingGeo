@@ -1,17 +1,1 @@
-{
-    "backgroundSource":"notdefault.png",
-    "globalTimer":130000,
-    "questions" : [
-        { "questionText":"Koji je glavni grad Srbije?", "timer":10000, "text":"Pancevo", "type":0 },
-        { "questionText":"Koja je najduza rijeka u Srbiji?", "timer":0, "type":1, "answers":[
-            { "text":"Dunav", "correct":true },
-            { "text":"Sava", "correct":false },
-            { "text":"Drina", "correct":false },
-            { "text":"Tara", "correct":false }
-        ]}
-    ],
-    "shapes" : [
-        { "type":"polygon", "data":data },
-        { "type":"circle", "data":data }
-    ]
-}
+{"backgroundSource":"resources/maps/notdefault.png","shapes":[],"questions":[{"timer":10000,"text":"Pancevo","type":0,"questionText":"Koji je glavni grad Srbije?"},{"timer":0,"answers":[{"correct":true,"text":"Dunav"},{"correct":false,"text":"Sava"},{"correct":false,"text":"Drina"},{"correct":false,"text":"Tara"}],"type":1,"questionText":"Koja je najduza rijeka u Srbiji?"}]}
