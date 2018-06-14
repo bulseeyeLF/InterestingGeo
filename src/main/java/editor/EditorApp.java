@@ -83,8 +83,8 @@ public class EditorApp extends Application {
 
     private BorderPane initEditScreen(@Nullable File input) {
         GameFrame editScreen = new GameFrame();
-        if (input != null) {
-            //TODO: implement choosing of loaded file
+        if (input != null && input.canRead()) {
+            //TODO: implement loading the file of loaded file
         } else {
             editScreen.setBackground(defaultMap);
             this.editMenu.setPrefWidth(utils.getScreenWidth()/5);
