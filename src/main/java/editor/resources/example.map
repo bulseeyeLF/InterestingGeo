@@ -2,8 +2,8 @@
     "backgroundSource":"relative/path",
     "globalTimer":130000,
     "questions" : [
-        { "questionText":"Koji je glavni grad Srbije?", "answer":"Pancevo", "timer":10000 },
-        { "questionText":"Koja je najduza rijeka u Srbiji?", "answers":[
+        { "questionText":"Koji je glavni grad Srbije?", "timer":10000, "answer":"Pancevo" },
+        { "questionText":"Koja je najduza rijeka u Srbiji?", "timer":0, "answers":[
             { "answerText":"Dunav", correct:true },
             { "answerText":"Sava", correct:false },
             { "answerText":"Drina", correct:false },
