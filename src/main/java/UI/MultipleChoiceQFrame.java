@@ -4,11 +4,17 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import main.java.editor.Answer;
+import main.java.editor.MultipleChoiceA;
 import main.java.editor.MultipleChoiceQ;
 import main.java.editor.Question;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class MultipleChoiceQFrame extends QuestionFrame {
@@ -33,7 +39,7 @@ public class MultipleChoiceQFrame extends QuestionFrame {
 
     @Override
     public void init() {
-        this.inputField.setText(question.getQuestionText());
+        ArrayList<MultipleChoiceA> answers = ((MultipleChoiceQ) question).getAnswers();
         answersChooserPane = new BorderPane();
         answerTextFieldsPane = new FlowPane();
         validityButtonsPane = new FlowPane();
@@ -42,19 +48,19 @@ public class MultipleChoiceQFrame extends QuestionFrame {
         validityButtons = new ToggleGroup();
         for (int i = 0; i < answerFields.length; i++) {
             radioButtons[i] = new RadioButton();
+            //radioButtons[i].sele
             radioButtons[i].setToggleGroup(validityButtons);
-            if (i == 1) {
-                radioButtons[i].setSelected(true);
-            }
-            validityButtonsPane.getChildren().add(radioButtons[i]);
             answerFields[i] = new TextField();
-            answerTextFieldsPane.getChildren().add(answerFields[i]);
+            answerFields[i].setText(answers.get(i).getText());
+            if (answers.get(i).isCorrect()) {
+                radioButtons[i].setSelected(true);
+                answerFields[i].setStyle("-fx-text-inner-color: green;");
+            } else {
+                answerFields[i].setStyle("-fx-text-inner-color: red;");
+            }
+            answerTextFieldsPane.getChildren().addAll(answerFields[i], radioButtons[i]);
         }
-        answerTextFieldsPane.setPrefHeight(300);
-        answerTextFieldsPane.setPrefWidth(50);
         answersChooserPane.setLeft(answerTextFieldsPane);
-        validityButtonsPane.setPrefHeight(300);
-        validityButtonsPane.setPrefWidth(50);
         answersChooserPane.setRight(validityButtonsPane);
         this.setBottom(answersChooserPane);
     }

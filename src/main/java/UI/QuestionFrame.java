@@ -17,20 +17,7 @@ public abstract class QuestionFrame extends BorderPane {
     protected Question question;
     protected TextArea inputField;
 
-    public QuestionFrame(Question question) {
-        this.inputField = new TextArea(question.getQuestionText());
-        this.inputField.setPrefHeight(50);
-        this.inputField.setPrefWidth(200);
-        this.question = question;
-        this.setCenter(this.inputField);
-    }
-
     public QuestionFrame() {
-        UtilsCommon utils = new UtilsCommon();
-        this.inputField = new TextArea("");
-        this.inputField.setPrefWidth(utils.getScreenWidth()/4);
-        this.inputField.setPrefHeight(utils.getScreenHeight()/4);
-        this.setCenter(this.inputField);
     }
 
     public String getInputFieldString() {

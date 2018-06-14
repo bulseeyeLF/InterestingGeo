@@ -24,6 +24,8 @@ public class UserInputQFrame extends QuestionFrame {
 
     @Override
     public QuestionFrame setQuestion(Question question) {
+        answerTextField = new TextField("");
+        answerTextField.setText(question.getCorrectAnswer().getText());
         this.question = question;
         init();
         return this;
@@ -36,10 +38,6 @@ public class UserInputQFrame extends QuestionFrame {
 
     @Override
     public void init() {
-        this.inputField.setText(this.question.getQuestionText());
-        answerTextField = new TextField("");
-        answerTextField.setPrefHeight(400);
-        answerTextField.setPrefWidth(400);
         this.setBottom(answerTextField);
     }
 }
