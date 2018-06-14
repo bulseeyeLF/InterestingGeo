@@ -33,8 +33,15 @@ public class GameFrame extends BorderPane {
         super(center, top, right, bottom, left);
     }
 
-    private Image background;
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
 
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
+    private Image background;
     private UtilsCommon utils = new UtilsCommon();
     private double WIDTH = utils.getScreenWidth() - utils.getScreenWidth()/5;
     private double HEIGHT = utils.getScreenHeight();

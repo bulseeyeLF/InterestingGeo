@@ -44,7 +44,8 @@ public class EditorApp extends Application {
     public void newMap() {
         editRoot.getChildren().clear();
         try {
-            editRoot.getChildren().add(initEditScreen(null));
+            editScreen = initEditScreen(null);
+            editRoot.getChildren().add(editScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,13 +86,14 @@ public class EditorApp extends Application {
         File selectedFile = fileChooser.showOpenDialog(currentStage);
             editRoot.getChildren().clear();
         try {
-            editRoot.getChildren().add(initEditScreen(selectedFile.getCanonicalPath()));
+            editScreen = initEditScreen(selectedFile.getCanonicalPath());
+            editRoot.getChildren().add(editScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         mainScene.setRoot(editRoot);
-            currentMenu = editMenu;
+        currentMenu = editMenu;
     }
 
     private void initShortcuts(Stage parent) {
@@ -115,7 +117,7 @@ public class EditorApp extends Application {
         return mainScreen;
     }
 
-    private BorderPane initEditScreen(String input) throws IOException {
+    private GameFrame initEditScreen(String input) throws IOException {
         GameFrame editScreen = new GameFrame();
         if ( input!= null ){
             String myJsonFile;
@@ -157,14 +159,14 @@ public class EditorApp extends Application {
     }
 
     private BorderPane initAddScreen() {
-        BorderPane addScreen = new MultipleChoiceQFrame(new MultipleChoiceQ(""));
+        addScreen = new QuestionEditPane(editScreen.getQuestions());
         addScreen.setRight(this.addMenu);
         this.addMenu.setAlignment(Pos.CENTER);
         return addScreen;
     }
     @Override
     public void start(Stage editorStage) {
-        BorderPane mainScreen = initMainScreen();
+        mainScreen = initMainScreen();
         initShortcuts(editorStage);
         mainRoot = new Group();
         editRoot = new Group();
@@ -188,6 +190,9 @@ public class EditorApp extends Application {
     private Group mainRoot;
     private Group editRoot;
     private Group addRoot;
+    private GameFrame editScreen;
+    private BorderPane addScreen;
+    private BorderPane mainScreen;
 
     private String[] MAIN_MENU_TEXT = {
         "New Map",
