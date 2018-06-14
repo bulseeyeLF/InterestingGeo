@@ -22,12 +22,14 @@ import javafx.scene.Group;
 import main.java.UI.*;
 import main.java.utils.UtilsCommon;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.text.html.HTMLDocument;
 import java.io.*;
 import java.nio.Buffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
@@ -120,33 +122,7 @@ public class EditorApp extends Application {
     private GameFrame initEditScreen(String input) throws IOException {
         GameFrame editScreen = new GameFrame();
         if ( input!= null ){
-            String myJsonFile;
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(input));
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
-                }
-                myJsonFile = sb.toString();
-                JSONObject jsonObjectMap = new JSONObject(myJsonFile);
-
-                String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
-                InputStream fileInputStream;
-                if (backgroundPath.contains("/")) {
-                     fileInputStream= new FileInputStream(backgroundPath);
-                }
-                else {
-                    fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
-                }
-                editScreen.setBackground(new Image(fileInputStream));
-
-            } catch (FileNotFoundException | JSONException e) {
-                editScreen.setBackground(defaultMap);
-                e.printStackTrace();
-            }
+            mapLoader(input, editScreen);
         } else {
             editScreen.setBackground(defaultMap);
         }
@@ -156,6 +132,51 @@ public class EditorApp extends Application {
         this.editMenu.setAlignment(Pos.CENTER);
 
         return editScreen;
+    }
+
+    private void mapLoader(String input, GameFrame editScreen) throws IOException{
+        try {
+            String myJsonFile;
+            BufferedReader br = new BufferedReader(new FileReader(input));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            myJsonFile = sb.toString();
+            JSONObject jsonObjectMap = new JSONObject(myJsonFile);
+
+            String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
+            InputStream fileInputStream;
+            if (backgroundPath.contains("/")) {
+                fileInputStream= new FileInputStream(backgroundPath);
+            }
+            else {
+                fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
+            }
+            editScreen.setBackground(new Image(fileInputStream));
+
+            JSONArray jsonArray = jsonObjectMap.getJSONArray("questions");
+            ArrayList<Question> arrayListQuestion = new ArrayList<>();
+
+            for (int i =0 ; i < jsonArray.length(); i++){
+                int typeInt = jsonArray.optJSONObject(i).optInt("type");
+                if (typeInt == 0){
+                    arrayListQuestion.add(new UserInputQ(jsonArray.getJSONObject(i)));
+                } else if (typeInt == 1){
+                    arrayListQuestion.add(new MultipleChoiceQ(jsonArray.getJSONObject(i)));
+                }
+            }
+            editScreen.setQuestions(arrayListQuestion);
+
+        } catch (FileNotFoundException | JSONException e) {
+            editScreen.setBackground(defaultMap);
+            e.printStackTrace();
+        }
+
+
     }
 
     private BorderPane initAddScreen() {
