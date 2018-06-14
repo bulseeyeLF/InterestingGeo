@@ -38,8 +38,9 @@ public class EditorApp extends Application {
         addRoot.getChildren().add(initAddScreen());
         mainScene.setRoot(addRoot);
         currentMenu = addMenu;
-        currentRoot =
+        currentRoot = addRoot;
     }
+
     public void newMap() {
         editRoot.getChildren().clear();
         try {
