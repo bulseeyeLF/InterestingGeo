@@ -84,8 +84,6 @@ public class EditorApp extends Application {
         JSONObject jsonObject = new JSONObject();
         ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
         JSONArray jsonArray = new JSONArray();
-
-
         addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
         jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
         try { jsonObject.put("backgroundSource", editScreen.getBackgroundPath())

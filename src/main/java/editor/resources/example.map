@@ -4,19 +4,19 @@
     "questions": [
         {
             "timer": 10000,
-            "text": "Pancevo",
+            "text": "Pancevo???>>>>",
             "type": 0,
-            "questionText": "Koji je glavni grad Srbije?"
+            "questionText": "Koji je glavni grad Srbije??????????"
         },
         {
             "timer": 0,
             "answers": [
                 {
-                    "correct": true,
+                    "correct": false,
                     "text": "Dunav"
                 },
                 {
-                    "correct": false,
+                    "correct": true,
                     "text": "error"
                 },
                 {
