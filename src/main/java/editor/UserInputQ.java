@@ -11,17 +11,10 @@ public class UserInputQ extends Question {
     };
     @Override
     public boolean checkAnswer(Answer userAnswer) {
+        givenAnswer = userAnswer;
         return userAnswer.getText().equals(correctAnswer.getText());
     }
 
-    public String getGivenAnswer() {
-        return givenAnswer;
-    }
-
-    public void setGivenAnswer(String givenAnswer) {
-        this.givenAnswer = givenAnswer;
-    }
-
-    private String givenAnswer;
+    private Answer givenAnswer;
     private Answer correctAnswer;
 }
