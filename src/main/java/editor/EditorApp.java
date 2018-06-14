@@ -21,7 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.Group;
 import main.java.UI.*;
 import main.java.utils.UtilsCommon;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +35,8 @@ public class EditorApp extends Application {
 
     public void addQuestions() {
         addRoot.getChildren().clear();
-        addRoot.getChildren().add(initAddScreen());
+        addScreen = initAddScreen();
+        addRoot.getChildren().add(addScreen);
         mainScene.setRoot(addRoot);
         currentMenu = addMenu;
         currentRoot = addRoot;
@@ -64,7 +65,7 @@ public class EditorApp extends Application {
 
     }
     public void saveAndBack() {
-
+        close();
     }
     public void backToMain() {
         mainScene.setRoot(mainRoot);
@@ -159,7 +160,7 @@ public class EditorApp extends Application {
     }
 
     private BorderPane initAddScreen() {
-        addScreen = new QuestionEditPane(editScreen.getQuestions());
+        QuestionEditPane addScreen = new QuestionEditPane(editScreen.getQuestions());
         addScreen.setRight(this.addMenu);
         this.addMenu.setAlignment(Pos.CENTER);
         return addScreen;
