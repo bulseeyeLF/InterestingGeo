@@ -31,19 +31,37 @@ import java.util.HashMap;
 
 public class EditorApp extends Application {
 
+    public void addQuestions() {
+        addRoot.getChildren().clear();
+        addRoot.getChildren().add(initAddScreen());
+        mainScene.setRoot(addRoot);
+        currentMenu = addMenu;
+        currentRoot =
+    }
     public void newMap() {
         editRoot.getChildren().clear();
         editRoot.getChildren().add(initEditScreen(null));
         mainScene.setRoot(editRoot);
         currentMenu = editMenu;
+        currentRoot = editRoot;
     }
 
     public void importBackground() {
 
     }
+    public void addQuestion() {
+
+    }
+    public void deleteQuestion() {
+
+    }
+    public void saveAndBack() {
+
+    }
     public void backToMain() {
         mainScene.setRoot(mainRoot);
         currentMenu = mainMenu;
+        currentRoot = mainRoot;
     }
 
     public void close() {
@@ -95,13 +113,19 @@ public class EditorApp extends Application {
         return editScreen;
     }
 
-
+    private BorderPane initAddScreen() {
+        BorderPane addScreen = new MultipleChoiceQFrame(new MultipleChoiceQ(""));
+        addScreen.setRight(this.addMenu);
+        this.addMenu.setAlignment(Pos.CENTER);
+        return addScreen;
+    }
     @Override
     public void start(Stage editorStage) {
         BorderPane mainScreen = initMainScreen();
         initShortcuts(editorStage);
         mainRoot = new Group();
         editRoot = new Group();
+        addRoot = new Group();
         initScreen(editorStage);
         mainRoot.getChildren().addAll(mainScreen);
         mainScene = new Scene(mainRoot);
@@ -110,6 +134,7 @@ public class EditorApp extends Application {
         mainScreen.setPrefHeight(editorStage.getHeight());
         mainScreen.setPrefWidth(editorStage.getWidth());
         currentMenu = mainMenu;
+        currentRoot = mainRoot;
         editorStage.setScene(mainScene);
     }
 
@@ -117,8 +142,10 @@ public class EditorApp extends Application {
         launch(argv);
     }
 
-    private Group mainRoot = new Group();
-    private Group editRoot = new Group();
+    private Group mainRoot;
+    private Group editRoot;
+    private Group addRoot;
+
     private String[] MAIN_MENU_TEXT = {
         "New Map",
         "Edit Map",
@@ -157,7 +184,32 @@ public class EditorApp extends Application {
         KeyCode.I,
         KeyCode.B
     };
-    private Selection[] EDIT_MENU_ACTIONS = {()->{}, ()->{}, ()->{}, this::backToMain};
+    private Selection[] EDIT_MENU_ACTIONS = {
+        this::addQuestions,
+        ()->{},
+        ()->{},
+        this::backToMain
+    };
+    private String[] ADD_MENU_TEXT = {
+        "Add",
+        "Delete",
+        "Save"
+    };
+    private String[] ADD_MENU_HINT_TEXT = {
+        "(A)dd another question",
+        "(D)elete current question",
+        "(S)ave and back"
+    };
+    private Selection[] ADD_MENU_ACTIONS = {
+        this::addQuestion,
+        this::deleteQuestion,
+        this::saveAndBack
+    };
+    private KeyCode[] ADD_MENU_TRIGGERS = {
+        KeyCode.A,
+        KeyCode.D,
+        KeyCode.S
+    };
     private OptionMenu mainMenu = new OptionMenu(
         "main",
         new OptionButton[MAIN_MENU_TEXT.length],
@@ -174,9 +226,19 @@ public class EditorApp extends Application {
         EDIT_MENU_ACTIONS,
         EDIT_MENU_TRIGGERS
     );
+    private OptionMenu addMenu = new OptionMenu(
+        "add",
+        new OptionButton[ADD_MENU_TEXT.length],
+        ADD_MENU_TEXT,
+        ADD_MENU_HINT_TEXT,
+        ADD_MENU_ACTIONS,
+        ADD_MENU_TRIGGERS
+    );
     private UtilsCommon utils = new UtilsCommon();
+    private Group currentRoot;
     private OptionMenu currentMenu;
     private Scene mainScene;
     private Image defaultMap = new Image(GameFrame.class.getResourceAsStream("resources/maps/default.png"));
     private FileChooser fileChooser = new FileChooser();
+    private QuestionFrame questionAdapter;
 }
