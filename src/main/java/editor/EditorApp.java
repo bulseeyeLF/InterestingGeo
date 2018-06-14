@@ -81,30 +81,21 @@ public class EditorApp extends Application {
     }
 
     public void saveAndBack() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save at :");
-        File file =fileChooser.showSaveDialog(new Stage());
         JSONObject jsonObject = new JSONObject();
+        ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
 
-        if (file!=null){
-            file.setWritable(true);
-            ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
-            JSONArray jsonArray = new JSONArray();
-            addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
-            jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
-            try {
-                jsonObject.put("backgroundSource", file.getPath())
+
+        addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
+        jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
+        try { jsonObject.put("backgroundSource", editScreen.getBackgroundPath())
                         .put("globalTimer", editScreen.getTimer())
                         .put("questions", jsonObjectArrayListOfQuestions)
-                        .put("shapes","");
-
-                SaveFile(jsonObject.toString(),file);
-
-            }  catch (JSONException e) {
-                e.printStackTrace();
-            }
+                        .put("shapes",new JSONArray());
+            SaveFile(jsonObject.toString(4),currentlyOpenFile);
+         }catch (JSONException e) {
+            e.printStackTrace();
         }
-
         backToMain();
     }
 
@@ -126,10 +117,10 @@ public class EditorApp extends Application {
                 new FileChooser.ExtensionFilter("All Files", "*.map")
         );
         Stage currentStage = new Stage();
-        File selectedFile = fileChooser.showOpenDialog(currentStage);
+        currentlyOpenFile = fileChooser.showOpenDialog(currentStage);
             editRoot.getChildren().clear();
         try {
-            editScreen = initEditScreen(selectedFile.getCanonicalPath());
+            editScreen = initEditScreen(currentlyOpenFile.getCanonicalPath());
             editRoot.getChildren().add(editScreen);
         } catch (IOException e) {
             e.printStackTrace();
@@ -177,26 +168,28 @@ public class EditorApp extends Application {
 
     private void mapLoader(String input, GameFrame editScreen) throws IOException{
         try {
+            System.out.println("in map loader");
             String myJsonFile;
             BufferedReader br = new BufferedReader(new FileReader(input));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
+            System.out.println(line);
             while (line != null) {
                 sb.append(line);
-                sb.append(System.lineSeparator());
                 line = br.readLine();
             }
             myJsonFile = sb.toString();
+
             JSONObject jsonObjectMap = new JSONObject(myJsonFile);
 
             String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
             InputStream fileInputStream;
-            if (backgroundPath.contains("/")) {
-                fileInputStream= new FileInputStream(backgroundPath);
+            if (!backgroundPath.contains("/")) {
+                backgroundPath = "resources/maps/" + backgroundPath;
             }
-            else {
-                fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
-            }
+
+            fileInputStream = GameFrame.class.getResourceAsStream(backgroundPath);
+            editScreen.setBackgroundPath(backgroundPath);
             editScreen.setBackground(new Image(fileInputStream));
 
             JSONArray jsonArray = jsonObjectMap.getJSONArray("questions");
@@ -351,4 +344,5 @@ public class EditorApp extends Application {
     private QuestionFrame currentAdapter;
     private Image defaultMap = new Image(GameFrame.class.getResourceAsStream("resources/maps/default.png"));
     private FileChooser fileChooser = new FileChooser();
+    private File currentlyOpenFile=null;
 }
