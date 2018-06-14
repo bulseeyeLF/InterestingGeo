@@ -92,10 +92,13 @@ public class EditorApp extends Application {
          }catch (JSONException e) {
             e.printStackTrace();
         }
-        backToMain();
+        backToEdit();
     }
 
-
+    private void backToEdit(){
+        mainScene.setRoot(editRoot);
+        currentMenu = editMenu;
+    }
     public void backToMain() {
         mainScene.setRoot(mainRoot);
         currentMenu = mainMenu;
