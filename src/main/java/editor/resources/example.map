@@ -1,5 +1,5 @@
 {
-    "backgroundSource": "notdefault.png",
+    "backgroundSource": "resources/maps/notdefault.png",
     "shapes": [],
     "questions": [
         {
@@ -30,6 +30,21 @@
             ],
             "type": 1,
             "questionText": "Koja je najduza rijeka u Srbiji?"
+        },
+        {
+            "timer": 0,
+            "text": "",
+            "type": 0,
+            "questionText": ""
+        },
+        {
+            "timer": 0,
+            "answers": [{
+                "correct": false,
+                "text": ""
+            }],
+            "type": 1,
+            "questionText": ""
         }
     ]
-} 
+}
