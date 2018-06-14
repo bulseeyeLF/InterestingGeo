@@ -1,6 +1,7 @@
 package main.java.UI;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -10,12 +11,14 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import main.java.editor.EditorApp;
 
 
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 public class OptionMenu extends FlowPane {
     public OptionMenu(String name, OptionButton[] buttons, String[] text, String[] hint, Selection[] actions, KeyCode[] triggers) {
@@ -64,13 +67,13 @@ public class OptionMenu extends FlowPane {
     public OptionButton[] getButtons() {
         return buttons;
     }
+
     private void init() {
         this.setPadding(new Insets(5, 0, 5, 0));
         this.setVgap(4);
         this.setHgap(4);
         this.setPrefWrapLength(170); // preferred width allows for two columns
         this.setStyle("-fx-background-color: DAE6F3;");
-
         for (int i = 0; i < TEXT.length; i++) {
             buttons[i] = new OptionButton(
                 TEXT[i],
@@ -83,6 +86,7 @@ public class OptionMenu extends FlowPane {
                 TRIGGER_KEYS[i]
             );
             buttons[i].setTooltip(new Tooltip(HINT_TEXT[i]));
+            buttons[i].setOnMouseClicked(event -> ((OptionButton)event.getSource()).getAction().execute());
             this.getChildren().add(buttons[i]);
         }
 

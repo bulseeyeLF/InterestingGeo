@@ -23,6 +23,6 @@ public class MultipleChoiceQ extends Question {
     }
     @Override
     public boolean checkAnswer(Answer userAnswer) {
-        return false;
+        return ((MultipleChoiceA)userAnswer).isCorrect();
     }
 }
