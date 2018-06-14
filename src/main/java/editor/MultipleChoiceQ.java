@@ -23,7 +23,7 @@ public class MultipleChoiceQ extends Question {
         super(jsonQuestion);
         JSONArray answersJson = jsonQuestion.optJSONArray("answers");
         if (answersJson != null) {
-            for (int i = 0; i < answersJson.length(); i++) {
+            for (int i = 0; i < 4; i++) {
                 JSONObject oneAnswer = answersJson.optJSONObject(i);
                 if (oneAnswer != null) {
                     answers.add(new MultipleChoiceA(
@@ -38,7 +38,9 @@ public class MultipleChoiceQ extends Question {
                 }
             }
         } else {
-            answers.add(new MultipleChoiceA("", false));
+            for (int i = 0; i < 4; i++) {
+                answers.add(new MultipleChoiceA("", false));
+            }
         }
 
     }

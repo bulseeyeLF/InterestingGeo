@@ -77,10 +77,10 @@ public class EditorApp extends Application {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        addScreen.getQuestions().add(newQuestion);
+        addScreen.addQuestion(newQuestion);
     }
     public void deleteQuestion() {
-
+        addScreen.deleteQuestion(addScreen.getSelectedQuestion());
     }
     private void SaveFile(String content, File file){
         try {
