@@ -72,7 +72,7 @@ public class EditorApp extends Application {
         System.out.println(file.getName());
 
         Image img=new Image(file.toURI().toString());
-        editScreen.setBackgroundPath(file.getAbsolutePath();
+        editScreen.setBackgroundPath(file.getAbsolutePath());
         editScreen.setBackground(img);
     }
 
