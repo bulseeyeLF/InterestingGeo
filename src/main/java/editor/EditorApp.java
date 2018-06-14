@@ -16,18 +16,20 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.FileChooser;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import javafx.scene.Scene;
 import javafx.scene.Group;
-import javafx.stage.WindowEvent;
 import main.java.UI.*;
 import main.java.utils.UtilsCommon;
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.swing.text.html.HTMLDocument;
-import java.io.File;
+import java.io.*;
+import java.nio.Buffer;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 public class EditorApp extends Application {
 
@@ -40,7 +42,11 @@ public class EditorApp extends Application {
     }
     public void newMap() {
         editRoot.getChildren().clear();
-        editRoot.getChildren().add(initEditScreen(null));
+        try {
+            editRoot.getChildren().add(initEditScreen(null));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mainScene.setRoot(editRoot);
         currentMenu = editMenu;
         currentRoot = editRoot;
@@ -70,12 +76,21 @@ public class EditorApp extends Application {
     }
 
     public void editMap() {
-        String path = "test.txt";
-        //TODO: implement choosing of file
-        editRoot.getChildren().clear();
-        editRoot.getChildren().add(initEditScreen(new File(path)));
+        fileChooser.setTitle("Open Map");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Files", "*.map")
+        );
+        Stage currentStage = new Stage();
+        File selectedFile = fileChooser.showOpenDialog(currentStage);
+            editRoot.getChildren().clear();
+        try {
+            editRoot.getChildren().add(initEditScreen(selectedFile.getCanonicalPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         mainScene.setRoot(editRoot);
-        currentMenu = editMenu;
+            currentMenu = editMenu;
     }
 
     private void initShortcuts(Stage parent) {
@@ -99,17 +114,44 @@ public class EditorApp extends Application {
         return mainScreen;
     }
 
-    private BorderPane initEditScreen(@Nullable File input) {
+    private BorderPane initEditScreen(String input) throws IOException {
         GameFrame editScreen = new GameFrame();
-        if (input != null && input.canRead()) {
-            //TODO: implement loading the file of loaded file
+        if ( input!= null ){
+            String myJsonFile;
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(input));
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+                while (line != null) {
+                    sb.append(line);
+                    sb.append(System.lineSeparator());
+                    line = br.readLine();
+                }
+                myJsonFile = sb.toString();
+                JSONObject jsonObjectMap = new JSONObject(myJsonFile);
+
+                String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
+                InputStream fileInputStream;
+                if (backgroundPath.contains("/")) {
+                     fileInputStream= new FileInputStream(backgroundPath);
+                }
+                else {
+                    fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
+                }
+                editScreen.setBackground(new Image(fileInputStream));
+
+            } catch (FileNotFoundException | JSONException e) {
+                editScreen.setBackground(defaultMap);
+                e.printStackTrace();
+            }
         } else {
             editScreen.setBackground(defaultMap);
-            this.editMenu.setPrefWidth(utils.getScreenWidth()/5);
-            this.editMenu.setPrefHeight(utils.getScreenHeight());
-            editScreen.setRight(this.editMenu);
-            this.editMenu.setAlignment(Pos.CENTER);
         }
+        this.editMenu.setPrefWidth(utils.getScreenWidth()/5);
+        this.editMenu.setPrefHeight(utils.getScreenHeight());
+        editScreen.setRight(this.editMenu);
+        this.editMenu.setAlignment(Pos.CENTER);
+
         return editScreen;
     }
 
