@@ -14,6 +14,16 @@ import java.util.ArrayList;
 
 public class GameFrame extends BorderPane {
 
+    private String backgroundPath;
+
+    public String getBackgroundPath() {
+        return backgroundPath;
+    }
+
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
+    }
+
     public void setBackground(Image background) {
         this.background = background;
         ImageView map = new ImageView(this.background);

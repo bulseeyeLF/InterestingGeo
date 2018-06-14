@@ -90,13 +90,15 @@ public class EditorApp extends Application {
             file.setWritable(true);
             ArrayList<JSONObject> jsonObjectArrayListOfQuestions= new ArrayList<>();
             JSONArray jsonArray = new JSONArray();
+
+
             addScreen.getQuestions().stream().map(Question::save).forEach(jsonObjectArrayListOfQuestions::add);
             jsonObjectArrayListOfQuestions.forEach(jsonArray::put);
             try {
-                jsonObject.put("backgroundSource", file.getPath())
+                jsonObject.put("backgroundSource", editScreen.getBackgroundPath())
                         .put("globalTimer", editScreen.getTimer())
                         .put("questions", jsonObjectArrayListOfQuestions)
-                        .put("shapes","");
+                        .put("shapes",new JSONArray());
 
                 SaveFile(jsonObject.toString(),file);
 
@@ -177,13 +179,13 @@ public class EditorApp extends Application {
 
     private void mapLoader(String input, GameFrame editScreen) throws IOException{
         try {
+            System.out.println("in map loader");
             String myJsonFile;
             BufferedReader br = new BufferedReader(new FileReader(input));
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);
-                sb.append(System.lineSeparator());
                 line = br.readLine();
             }
             myJsonFile = sb.toString();
@@ -191,12 +193,11 @@ public class EditorApp extends Application {
 
             String backgroundPath = jsonObjectMap.optString("backgroundSource", "deafult");
             InputStream fileInputStream;
-            if (backgroundPath.contains("/")) {
-                fileInputStream= new FileInputStream(backgroundPath);
+            if (!backgroundPath.contains("/")) {
+                backgroundPath = "resources/maps/" + backgroundPath;
             }
-            else {
-                fileInputStream = GameFrame.class.getResourceAsStream("resources/maps/"+backgroundPath);
-            }
+            fileInputStream = GameFrame.class.getResourceAsStream(backgroundPath);
+            editScreen.setBackgroundPath(backgroundPath);
             editScreen.setBackground(new Image(fileInputStream));
 
             JSONArray jsonArray = jsonObjectMap.getJSONArray("questions");
