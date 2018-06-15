@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -31,6 +32,7 @@ import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,7 +60,14 @@ public class EditorApp extends Application {
         currentMenu = editMenu;
     }
 
-    private void setGlobalLimit() {
+    private void setGlobalTimer() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Timer");
+        dialog.setHeaderText("Set global timer for this map.");
+        dialog.setContentText("Number in milisec:");
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(number ->{
+            editScreen.setTimer(Long.parseLong(number));});
     }
     private void importMap() {
         FileChooser fileChooser = new FileChooser();
@@ -67,10 +76,6 @@ public class EditorApp extends Application {
                 new FileChooser.ExtensionFilter("All Files", "*.png")
         );
         File file = (fileChooser.showOpenDialog(new Stage()));
-        System.out.println(file);
-        System.out.println(file.getAbsolutePath());
-        System.out.println(file.getName());
-
         Image img=new Image(file.toURI().toString());
         editScreen.setBackgroundPath(file.getAbsolutePath());
         editScreen.setBackground(img);
@@ -122,6 +127,9 @@ public class EditorApp extends Application {
                         .put("globalTimer", editScreen.getTimer())
                         .put("questions", jsonObjectArrayListOfQuestions)
                         .put("shapes",new JSONArray());
+            if (currentlyOpenFile==null){
+                currentlyOpenFile= new File("newMap.map");
+            }
             SaveFile(jsonObject.toString(4),currentlyOpenFile);
          }catch (JSONException e) {
             e.printStackTrace();
@@ -213,9 +221,11 @@ public class EditorApp extends Application {
             InputStream fileInputStream;
             if (!backgroundPath.contains("/")) {
                 backgroundPath = "resources/maps/" + backgroundPath;
+                fileInputStream = GameFrame.class.getResourceAsStream(backgroundPath);
+            }else {
+                fileInputStream =new FileInputStream(backgroundPath);
             }
 
-            fileInputStream = GameFrame.class.getResourceAsStream(backgroundPath);
             editScreen.setBackgroundPath(backgroundPath);
             editScreen.setBackground(new Image(fileInputStream));
 
@@ -315,7 +325,7 @@ public class EditorApp extends Application {
     };
     private Selection[] EDIT_MENU_ACTIONS = {
         this::addQuestions,
-        this::setGlobalLimit,
+        this::setGlobalTimer,
         this::importMap,
         this::backToMain
     };
