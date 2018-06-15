@@ -58,6 +58,25 @@ public class EditorApp extends Application {
         currentMenu = editMenu;
     }
 
+    private void setGlobalLimit() {
+    }
+    private void importMap() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import map");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Files", "*.png")
+        );
+        File file = (fileChooser.showOpenDialog(new Stage()));
+        System.out.println(file);
+        System.out.println(file.getAbsolutePath());
+        System.out.println(file.getName());
+
+        Image img=new Image(file.toURI().toString());
+        editScreen.setBackgroundPath(file.getAbsolutePath());
+        editScreen.setBackground(img);
+    }
+
+
     public void importBackground() {
 
     }
@@ -272,7 +291,7 @@ public class EditorApp extends Application {
         KeyCode.X
     };
     private Selection[] MAIN_MENU_ACTIONS = {
-        this::newMap,
+        this:: newMap,
         this::editMap,
         this::close
     };
@@ -296,10 +315,12 @@ public class EditorApp extends Application {
     };
     private Selection[] EDIT_MENU_ACTIONS = {
         this::addQuestions,
-        ()->{},
-        ()->{},
+        this::setGlobalLimit,
+        this::importMap,
         this::backToMain
     };
+
+
     private String[] ADD_MENU_TEXT = {
         "Add basic",
         "Add next-lvl",
