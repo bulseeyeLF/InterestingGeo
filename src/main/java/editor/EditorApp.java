@@ -291,13 +291,13 @@ public class EditorApp extends Application {
         this::close
     };
     private String[] EDIT_MENU_TEXT = {
-        "Add Question",
+        "Add Questions",
         "Set Global Timer",
         "Import map",
         "Back"
     };
     private String[] EDIT_MENU_HINT_TEXT = {
-        "(A)dd more one question",
+        "(A)dd one more request",
         "Set the (T)imer",
         "(I)mport new map file",
         "Go (B)ack"
