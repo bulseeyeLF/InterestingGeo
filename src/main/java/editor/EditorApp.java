@@ -64,7 +64,7 @@ public class EditorApp extends Application {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Import map");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Files", "*.png")
+            new FileChooser.ExtensionFilter("All Files", "*.png")
         );
         File file = (fileChooser.showOpenDialog(new Stage()));
         System.out.println(file);
