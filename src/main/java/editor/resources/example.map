@@ -1,13 +1,7 @@
 {
-    "backgroundSource": "resources/maps/notdefault.png",
+    "backgroundSource": "/Users/mdundic/Desktop/InterestingGeo/src/main/java/UI/resources/main_button_3.png",
     "shapes": [],
     "questions": [
-        {
-            "timer": 10000,
-            "text": "Pancevo",
-            "type": 0,
-            "questionText": "Koji je glavni grad Srbije?"
-        },
         {
             "timer": 0,
             "answers": [
@@ -30,6 +24,12 @@
             ],
             "type": 1,
             "questionText": "Novo pravilo? Ko je najveci bog?"
+        },
+        {
+            "timer": 0,
+            "text": "jnl",
+            "type": 0,
+            "questionText": "hb"
         }
     ]
 }
