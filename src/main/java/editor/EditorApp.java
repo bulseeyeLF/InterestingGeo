@@ -71,14 +71,9 @@ public class EditorApp extends Application {
         System.out.println(file.getAbsolutePath());
         System.out.println(file.getName());
 
-        Image img=new Image(file.toURI().toString());
+        Image img = new Image(file.toURI().toString());
         editScreen.setBackgroundPath(file.getAbsolutePath());
         editScreen.setBackground(img);
-    }
-
-
-    public void importBackground() {
-
     }
     public void addUserInputQuestion() {
         UserInputQ newQuestion = null;
