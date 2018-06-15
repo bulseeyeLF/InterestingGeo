@@ -64,11 +64,11 @@ public class EditorApp extends Application {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Timer");
         dialog.setHeaderText("Set global timer for this map.");
-        dialog.setContentText("Number in milisec:");
+        dialog.setContentText("# of seconds for this question:");
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(number ->{
-            editScreen.setTimer(Long.parseLong(number));});
+        result.ifPresent(number -> editScreen.setTimer(1000 * Long.parseLong(number)));
     }
+
     private void importMap() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Import map");
