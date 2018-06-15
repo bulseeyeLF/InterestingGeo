@@ -66,8 +66,15 @@ public class QuestionEditPane extends BorderPane {
         this.setBottom(frame);
     }
 
+    public void selectQuestion(int index) {
+        setSelectedQuestion(questions.get(index));
+    }
     public QuestionEditPane(ArrayList<Question> questions) {
         super();
+        if (questions == null) {
+            questions = new ArrayList<>();
+        }
+        UtilsCommon utils = new UtilsCommon();
         userInputAdapter = new UserInputQFrame();
         multipleChoiceAdapter = new MultipleChoiceQFrame();
         buttonsPane = new FlowPane();
@@ -76,18 +83,23 @@ public class QuestionEditPane extends BorderPane {
         for (int i = 0; i < questions.size(); i ++) {
             if (i == 0 ) {
                 setSelectedQuestion(questions.get(i));
+                selectedQuestion.getQuestionTextArea().setPrefHeight(utils.getScreenHeight()/3);
+                this.setCenter(selectedQuestion.getQuestionTextArea());
             }
             questionButtons.add(new Button(Integer.toString(i)));
             questionButtons.get(i).setPrefHeight(50);
             questionButtons.get(i).setPrefWidth(50);
-            questionButtons.get(i).setOnMouseClicked(event -> setSelectedQuestion(questions.get(questionButtons.indexOf(event.getSource()))));
+            questionButtons.get(i).setOnMouseClicked(event -> {
+                if (questionButtons != null) {
+                    int index;
+                    index = questionButtons.indexOf(event.getSource());
+                    selectQuestion(index);
+                }
+            });
             buttonsPane.getChildren().add(questionButtons.get(i));
         }
         this.setTop(buttonsPane);
-        UtilsCommon utils = new UtilsCommon();
-        selectedQuestion.getQuestionTextArea().setPrefHeight(utils.getScreenHeight()/3);
         buttonsPane.setPrefHeight(utils.getScreenHeight()/3);
-        this.setCenter(selectedQuestion.getQuestionTextArea());
         buttonsPane.setAlignment(Pos.CENTER);
         setBottom(frame);
     }
