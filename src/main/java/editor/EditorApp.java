@@ -73,17 +73,12 @@ public class EditorApp extends Application {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Import map");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Files", "*.png")
+            new FileChooser.ExtensionFilter("All Files", "*.png")
         );
         File file = (fileChooser.showOpenDialog(new Stage()));
-        Image img=new Image(file.toURI().toString());
+        Image img = new Image(file.toURI().toString());
         editScreen.setBackgroundPath(file.getAbsolutePath());
         editScreen.setBackground(img);
-    }
-
-
-    public void importBackground() {
-
     }
     public void addUserInputQuestion() {
         UserInputQ newQuestion = null;
